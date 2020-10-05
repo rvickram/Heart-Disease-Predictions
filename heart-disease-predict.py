@@ -25,6 +25,7 @@ sns.countplot(x = df_data['target'])
 plt.title('Countplot of Target')
 plt.xlabel('target')
 plt.ylabel('Patients')
+print('\nClose plot to continue!')
 plt.show()
 
 # separate prediction data (x) from desired output (y)
@@ -38,3 +39,29 @@ x = ss.fit_transform(x)
 
 # split training and test data (70 : 30)
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = 0.3)
+
+# determine max test score and k value
+train_score = []
+test_score = []
+k_vals = []
+
+for k in range(1, 21):
+    k_vals.append(k)
+    knn = KNeighborsClassifier(n_neighbors = k)
+    knn.fit(X_train, y_train)
+    
+    tr_score = knn.score(X_train, y_train)
+    train_score.append(tr_score)
+    
+    te_score = knn.score(X_test, y_test)
+    test_score.append(te_score)
+
+max_test_score = max(test_score)
+test_scores_ind = [i for i, v in enumerate(test_score) if v == max_test_score]
+print('Max test score {} and k = {}'.format(max_test_score * 100, list(map(lambda x: x + 1, test_scores_ind))))
+
+#Setup a knn classifier with k neighbors
+knn = KNeighborsClassifier(3)
+
+knn.fit(X_train, y_train)
+print('KNN score: ', knn.score(X_test, y_test))
