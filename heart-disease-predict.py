@@ -16,3 +16,13 @@ import seaborn as sns
 
 # Read the CSV into a dataframe
 df_data = pd.read_csv('heart.csv')
+print(df_data.head())
+
+# Examine the balance between two classes (target 1 = has heart disease, 
+# target 0 = does not have heart disease)
+sns.countplot(x = df_data['target'])
+# Add labels to plot
+plt.title('Countplot of Target')
+plt.xlabel('target')
+plt.ylabel('Patients')
+plt.show()
