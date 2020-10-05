@@ -20,7 +20,7 @@ print(df_data.head())
 
 # Examine the balance between two classes (target 1 = has heart disease, 
 # target 0 = does not have heart disease)
-sns.countplot(x = df_data['target'])
+sns.countplot(x = 'target', data = df_data)
 # Add labels to plot
 plt.title('Countplot of Target')
 plt.xlabel('target')
@@ -60,8 +60,13 @@ max_test_score = max(test_score)
 test_scores_ind = [i for i, v in enumerate(test_score) if v == max_test_score]
 print('Max test score {} and k = {}'.format(max_test_score * 100, list(map(lambda x: x + 1, test_scores_ind))))
 
-#Setup a knn classifier with k neighbors
+# Setup a knn classifier with k neighbors
 knn = KNeighborsClassifier(3)
 
 knn.fit(X_train, y_train)
 print('KNN score: ', knn.score(X_test, y_test))
+
+# Make a prediction
+y_pred = knn.predict(X_test)
+confusion_matrix(y_test,y_pred)
+print("Confusion matrix: \n", pd.crosstab(y_test, y_pred, rownames = ['Actual'], colnames =['Predicted'], margins = True))
