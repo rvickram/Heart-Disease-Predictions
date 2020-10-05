@@ -26,3 +26,15 @@ plt.title('Countplot of Target')
 plt.xlabel('target')
 plt.ylabel('Patients')
 plt.show()
+
+# separate prediction data (x) from desired output (y)
+x = df_data.drop(['target'], axis=1) # parameters/data used to make predictions
+y = df_data['target'].values # what we are predicting
+
+# do some scaling (since using KNN)
+from sklearn.preprocessing import StandardScaler
+ss = StandardScaler()
+x = ss.fit_transform(x)
+
+# split training and test data (70 : 30)
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = 0.3)
